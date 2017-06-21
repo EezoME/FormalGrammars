@@ -14,16 +14,24 @@ public class AdditionMethods {
     // 0-9 : 48-57
     // '_':95   // '-':45  // '(':40  // ')':41 // '%':37  // '\':39  // '"':34
     // A-Я : 1040-1071   Ё : 1025   І : 1030
+
+    /**
+     * Checks if given word is a mathematician operation symbol (using Finite-State Machine).
+     *
+     * @param word given word
+     * @return <b>true</b> if it is, <b>false</b> - otherwise
+     */
     public static boolean mathOpFSM(String word) {
         int i = 0, state = 0;
+
         while (true) {
             try {
-                char s = word.charAt(i);
+                char c = word.charAt(i);
                 switch (state) {
                     case -1:
                         return false;
                     case 0:
-                        if (s == '=' | s == '*' | s == '/' | s == '+' | s == '-') {
+                        if (c == '=' || c == '*' || c == '/' || c == '+' || c == '-') {
                             state = -1;
                             break;
                         }
@@ -31,171 +39,179 @@ public class AdditionMethods {
             } catch (StringIndexOutOfBoundsException e) {
                 return state == -1;
             }
+
             i++;
         }
     }
 
+    /**
+     * Checks if given word is a keyword (using Finite-State Machine).
+     *
+     * @param word given word
+     * @return <b>true</b> if it is, <b>false</b> - otherwise
+     */
     public static boolean keywordFSM(String word) {
         word = word.toUpperCase();
         int i = 0, state = 0;
+
         while (true) {
             try {
-                char s = word.charAt(i);
+                char c = word.charAt(i);
                 switch (state) {
                     case -1:
                         return false;
                     case 0:
-                        if (s == 'S') {
+                        if (c == 'S') {
                             state = 1;
                             break;
                         }
-                        if (s == 'F') {
+                        if (c == 'F') {
                             state = 11;
                             break;
                         }
-                        if (s == 'W') {
+                        if (c == 'W') {
                             state = 21;
                             break;
                         }
-                        if (s == 'J') {
+                        if (c == 'J') {
                             state = 31;
                             break;
                         }
-                        if (s == 'I') {
+                        if (c == 'I') {
                             state = 41;
                             break;
                         }
-                        if (s == 'O') {
+                        if (c == 'O') {
                             state = 51;
                             break;
                         }
-                        if (s == 'A') {
+                        if (c == 'A') {
                             state = 61;
                             break;
                         }
                         return false;
                     case 1:
-                        if (s == 'E') {
+                        if (c == 'E') {
                             state = 2;
                             break;
                         }
                         return false;
                     case 2:
-                        if (s == 'L') {
+                        if (c == 'L') {
                             state = 3;
                             break;
                         }
                         return false;
                     case 3:
-                        if (s == 'E') {
+                        if (c == 'E') {
                             state = 4;
                             break;
                         }
                         return false;
                     case 4:
-                        if (s == 'C') {
+                        if (c == 'C') {
                             state = 5;
                             break;
                         }
                         return false;
                     case 5:
-                        if (s == 'T') {
+                        if (c == 'T') {
                             state = -1;
                             break;
                         }
                         return false;
                     case 11:
-                        if (s == 'R') {
+                        if (c == 'R') {
                             state = 12;
                             break;
                         }
                         return false;
                     case 12:
-                        if (s == 'O') {
+                        if (c == 'O') {
                             state = 13;
                             break;
                         }
                         return false;
                     case 13:
-                        if (s == 'M') {
+                        if (c == 'M') {
                             state = -1;
                             break;
                         }
                         return false;
                     case 21:
-                        if (s == 'H') {
+                        if (c == 'H') {
                             state = 22;
                             break;
                         }
                         return false;
                     case 22:
-                        if (s == 'E') {
+                        if (c == 'E') {
                             state = 23;
                             break;
                         }
                         return false;
                     case 23:
-                        if (s == 'R') {
+                        if (c == 'R') {
                             state = 24;
                             break;
                         }
                         return false;
                     case 24:
-                        if (s == 'E') {
+                        if (c == 'E') {
                             state = -1;
                             break;
                         }
                         return false;
                     case 31:
-                        if (s == 'O') {
+                        if (c == 'O') {
                             state = 32;
                             break;
                         }
                         return false;
                     case 32:
-                        if (s == 'I') {
+                        if (c == 'I') {
                             state = 33;
                             break;
                         }
                         return false;
                     case 33:
-                        if (s == 'N') {
+                        if (c == 'N') {
                             state = -1;
                             break;
                         }
                         return false;
                     case 41:
-                        if (s == 'N') {
+                        if (c == 'N') {
                             state = 42;
                             break;
                         }
                         return false;
                     case 42:
-                        if (s == 'N') {
+                        if (c == 'N') {
                             state = 43;
                             break;
                         }
                         return false;
                     case 43:
-                        if (s == 'E') {
+                        if (c == 'E') {
                             state = 44;
                             break;
                         }
                         return false;
                     case 44:
-                        if (s == 'R') {
+                        if (c == 'R') {
                             state = -1;
                             break;
                         }
                         return false;
                     case 51:
-                        if (s == 'N') {
+                        if (c == 'N') {
                             state = -1;
                             break;
                         }
                         return false;
                     case 61:
-                        if (s == 'S') {
+                        if (c == 'S') {
                             state = -1;
                             break;
                         }
@@ -204,64 +220,72 @@ public class AdditionMethods {
             } catch (StringIndexOutOfBoundsException e) {
                 return state == -1;
             }
+
             i++;
         }
     }
 
+    /**
+     * Checks if given word is a table name (using Finite-State Machine).
+     *
+     * @param word given word
+     * @return <b>true</b> if it is, <b>false</b> - otherwise
+     */
     public static boolean tablenameFSM(String word) {
         word = word.toUpperCase();
 //        word.matches("[A-Z]{1}[A-Z0-9]{1,7}");
         int i = 0, state = 0;
+
         while (true) {
             try {
-                char s = word.charAt(i);
+                char c = word.charAt(i);
                 switch (state) {
                     case -1:
                         return false;
                     case 0:
-                        if (s >= 65 & s <= 90) {
+                        if (isAZ(c)) {
                             state = 1;
                             break;
                         }
                         return false;
                     case 1:
-                        if ((s >= 48 & s <= 57) | (s >= 65 & s <= 90)) {
+                        if (is09(c) || isAZ(c)) {
                             state = 2;
                             break;
                         }
                         return false;
                     case 2:
-                        if ((s >= 48 & s <= 57) | (s >= 65 & s <= 90)) {
+                        if (is09(c) || isAZ(c)) {
                             state = 3;
                             break;
                         }
                         return false;
                     case 3:
-                        if ((s >= 48 & s <= 57) | (s >= 65 & s <= 90)) {
+                        if (is09(c) || isAZ(c)) {
                             state = 4;
                             break;
                         }
                         return false;
                     case 4:
-                        if ((s >= 48 & s <= 57) | (s >= 65 & s <= 90)) {
+                        if (is09(c) || isAZ(c)) {
                             state = 5;
                             break;
                         }
                         return false;
                     case 5:
-                        if ((s >= 48 & s <= 57) | (s >= 65 & s <= 90)) {
+                        if (is09(c) || isAZ(c)) {
                             state = 6;
                             break;
                         }
                         return false;
                     case 6:
-                        if ((s >= 48 & s <= 57) | (s >= 65 & s <= 90)) {
+                        if (is09(c) || isAZ(c)) {
                             state = 7;
                             break;
                         }
                         return false;
                     case 7:
-                        if ((s >= 48 & s <= 57) | (s >= 65 & s <= 90)) {
+                        if (is09(c) || isAZ(c)) {
                             state = -1;
                             break;
                         }
@@ -270,234 +294,242 @@ public class AdditionMethods {
             } catch (StringIndexOutOfBoundsException e) {
                 return true;
             }
+
             i++;
         }
     }
 
+    /**
+     * Checks if given word is a field name (using Finite-State Machine).
+     *
+     * @param word given word
+     * @return <b>true</b> if it is, <b>false</b> - otherwise
+     */
     public static boolean fieldFSM(String word) {
         word = word.toUpperCase();
 // word.matches("\\*|([A-Z]{1}[A-Z0-9]{0,7}\\.)?[A-Z\\_]{1}[A-Z0-9\\_-]{0,15}");
         int i = 0, state = 0;
+
         while (true) {
             try {
-                char s = word.charAt(i);
+                char c = word.charAt(i);
                 switch (state) {
                     case -1:
                         return false;
                     case 0:
-                        if (s == '*') {
+                        if (c == '*') {
                             state = -1;
                             break;
                         }
-                        if (s >= 65 & s <= 90) {
+                        if (isAZ(c)) {
                             state = 1;
                             break;
                         }
-                        if (s == '_') {
+                        if (c == '_') {
                             state = 10;
                             break;
                         }
                         return false;
                     case 1:
-                        if ((s >= 65 & s <= 90) | (s >= 48 & s <= 57)) {
+                        if (is09(c) || isAZ(c)) {
                             state = 2;
                             break;
                         }
-                        if (s == '_' | s == '-') {
+                        if (c == '_' || c == '-') {
                             state = 11;
                             break;
                         }
-                        if (s == '.') {
+                        if (c == '.') {
                             state = 9;
                             break;
                         }
                         return false;
                     case 2:
-                        if ((s >= 65 & s <= 90) | (s >= 48 & s <= 57)) {
+                        if (is09(c) || isAZ(c)) {
                             state = 3;
                             break;
                         }
-                        if (s == '_' | s == '-') {
+                        if (c == '_' || c == '-') {
                             state = 12;
                             break;
                         }
-                        if (s == '.') {
+                        if (c == '.') {
                             state = 9;
                             break;
                         }
                         return false;
                     case 3:
-                        if ((s >= 65 & s <= 90) | (s >= 48 & s <= 57)) {
+                        if (is09(c) || isAZ(c)) {
                             state = 4;
                             break;
                         }
-                        if (s == '_' | s == '-') {
+                        if (c == '_' || c == '-') {
                             state = 13;
                             break;
                         }
-                        if (s == '.') {
+                        if (c == '.') {
                             state = 9;
                             break;
                         }
                         return false;
                     case 4:
-                        if ((s >= 65 & s <= 90) | (s >= 48 & s <= 57)) {
+                        if (is09(c) || isAZ(c)) {
                             state = 5;
                             break;
                         }
-                        if (s == '_' | s == '-') {
+                        if (c == '_' || c == '-') {
                             state = 14;
                             break;
                         }
-                        if (s == '.') {
+                        if (c == '.') {
                             state = 9;
                             break;
                         }
                         return false;
                     case 5:
-                        if ((s >= 65 & s <= 90) | (s >= 48 & s <= 57)) {
+                        if (is09(c) || isAZ(c)) {
                             state = 6;
                             break;
                         }
-                        if (s == '_' | s == '-') {
+                        if (c == '_' || c == '-') {
                             state = 15;
                             break;
                         }
-                        if (s == '.') {
+                        if (c == '.') {
                             state = 9;
                             break;
                         }
                         return false;
                     case 6:
-                        if ((s >= 65 & s <= 90) | (s >= 48 & s <= 57)) {
+                        if (is09(c) || isAZ(c)) {
                             state = 7;
                             break;
                         }
-                        if (s == '_' | s == '-') {
+                        if (c == '_' || c == '-') {
                             state = 16;
                             break;
                         }
-                        if (s == '.') {
+                        if (c == '.') {
                             state = 9;
                             break;
                         }
                         return false;
                     case 7:
-                        if ((s >= 65 & s <= 90) | (s >= 48 & s <= 57)) {
+                        if (is09(c) || isAZ(c)) {
                             state = 8;
                             break;
                         }
-                        if (s == '_' | s == '-') {
+                        if (c == '_' || c == '-') {
                             state = 17;
                             break;
                         }
-                        if (s == '.') {
+                        if (c == '.') {
                             state = 9;
                             break;
                         }
                         return false;
                     case 8:
-                        if ((s >= 65 & s <= 90) | (s >= 48 & s <= 57) | s == '_' | s == '-') {
+                        if (is09(c) || isAZ(c) || c == '_' || c == '-') {
                             state = 18;
                             break;
                         }
-                        if (s == '.') {
+                        if (c == '.') {
                             state = 9;
                             break;
                         }
                         return false;
                     case 9:
-                        if ((s >= 65 & s <= 90) | (s >= 48 & s <= 57) | s == '_') {
+                        if (is09(c) || isAZ(c) || c == '_') {
                             state = 10;
                             break;
                         }
                         return false;
                     case 10:
-                        if ((s >= 65 & s <= 90) | (s >= 48 & s <= 57) | s == '_' | s == '-') {
+                        if (is09(c) || isAZ(c) || c == '_' || c == '-') {
                             state = 11;
                             break;
                         }
                         return false;
                     case 11:
-                        if ((s >= 65 & s <= 90) | (s >= 48 & s <= 57) | s == '_' | s == '-') {
+                        if (is09(c) || isAZ(c) || c == '_' || c == '-') {
                             state = 12;
                             break;
                         }
                         return false;
                     case 12:
-                        if ((s >= 65 & s <= 90) | (s >= 48 & s <= 57) | s == '_' | s == '-') {
+                        if (is09(c) || isAZ(c) || c == '_' || c == '-') {
                             state = 13;
                             break;
                         }
                         return false;
                     case 13:
-                        if ((s >= 65 & s <= 90) | (s >= 48 & s <= 57) | s == '_' | s == '-') {
+                        if (is09(c) || isAZ(c) || c == '_' || c == '-') {
                             state = 14;
                             break;
                         }
                         return false;
                     case 14:
-                        if ((s >= 65 & s <= 90) | (s >= 48 & s <= 57) | s == '_' | s == '-') {
+                        if (is09(c) || isAZ(c) || c == '_' || c == '-') {
                             state = 15;
                             break;
                         }
                         return false;
                     case 15:
-                        if ((s >= 65 & s <= 90) | (s >= 48 & s <= 57) | s == '_' | s == '-') {
+                        if (is09(c) || isAZ(c) || c == '_' || c == '-') {
                             state = 16;
                             break;
                         }
                         return false;
                     case 16:
-                        if ((s >= 65 & s <= 90) | (s >= 48 & s <= 57) | s == '_' | s == '-') {
+                        if (is09(c) || isAZ(c) || c == '_' || c == '-') {
                             state = 17;
                             break;
                         }
                         return false;
                     case 17:
-                        if ((s >= 65 & s <= 90) | (s >= 48 & s <= 57) | s == '_' | s == '-') {
+                        if (is09(c) || isAZ(c) || c == '_' || c == '-') {
                             state = 18;
                             break;
                         }
                         return false;
                     case 18:
-                        if ((s >= 65 & s <= 90) | (s >= 48 & s <= 57) | s == '_' | s == '-') {
+                        if (is09(c) || isAZ(c) || c == '_' || c == '-') {
                             state = 19;
                             break;
                         }
                         return false;
                     case 19:
-                        if ((s >= 65 & s <= 90) | (s >= 48 & s <= 57) | s == '_' | s == '-') {
+                        if (is09(c) || isAZ(c) || c == '_' || c == '-') {
                             state = 20;
                             break;
                         }
                         return false;
                     case 20:
-                        if ((s >= 65 & s <= 90) | (s >= 48 & s <= 57) | s == '_' | s == '-') {
+                        if (is09(c) || isAZ(c) || c == '_' || c == '-') {
                             state = 21;
                             break;
                         }
                         return false;
                     case 21:
-                        if ((s >= 65 & s <= 90) | (s >= 48 & s <= 57) | s == '_' | s == '-') {
+                        if (is09(c) || isAZ(c) || c == '_' || c == '-') {
                             state = 22;
                             break;
                         }
                         return false;
                     case 22:
-                        if ((s >= 65 & s <= 90) | (s >= 48 & s <= 57) | s == '_' | s == '-') {
+                        if (is09(c) || isAZ(c) || c == '_' || c == '-') {
                             state = 23;
                             break;
                         }
                         return false;
                     case 23:
-                        if ((s >= 65 & s <= 90) | (s >= 48 & s <= 57) | s == '_' | s == '-') {
+                        if (is09(c) || isAZ(c) || c == '_' || c == '-') {
                             state = 24;
                             break;
                         }
                         return false;
                     case 24:
-                        if ((s >= 65 & s <= 90) | (s >= 48 & s <= 57) | s == '_' | s == '-') {
+                        if (is09(c) || isAZ(c) || c == '_' || c == '-') {
                             state = -1;
                             break;
                         }
@@ -506,20 +538,28 @@ public class AdditionMethods {
             } catch (StringIndexOutOfBoundsException e) {
                 return true;
             }
+
             i++;
         }
     }
 
+    /**
+     * Checks if given word is a relation symbol (using Finite-State Machine).
+     *
+     * @param word given word
+     * @return <b>true</b> if it is, <b>false</b> - otherwise
+     */
     public static boolean relationFSM(String word) {
         int i = 0, state = 0;
+
         while (true) {
             try {
-                char s = word.charAt(i);
+                char c = word.charAt(i);
                 switch (state) {
                     case -1:
                         return false;
                     case 0:
-                        if (s == '>' | s == '<') {
+                        if (c == '>' | c == '<') {
                             state = -1;
                             break;
                         }
@@ -527,57 +567,65 @@ public class AdditionMethods {
             } catch (StringIndexOutOfBoundsException e) {
                 return state == -1;
             }
+
             i++;
         }
     }
 
+    /**
+     * Checks if given word is a number (using Finite-State Machine).
+     *
+     * @param word given word
+     * @return <b>true</b> if it is, <b>false</b> - otherwise
+     */
     public static boolean numberFSM(String word) {
         int i = 0, state = 0;
+
         while (true) {
             try {
-                char s = word.charAt(i);
+                char c = word.charAt(i);
                 switch (state) {
                     case 0:
-                        if (s == '-') {
+                        if (c == '-') {
                             state = 1;
                             break;
                         }
-                        if (s == 48) {
+                        if (c == '0') {
                             state = 2;
                             break;
                         }
-                        if (s > 48 & s <= 57) {
+                        if (c > '0' && c <= '9') {
                             state = 3;
                             break;
                         }
                         return false;
                     case 1:
-                        if (s == 48) {
+                        if (c == '0') {
                             state = 2;
                             break;
                         }
-                        if (s > 48 & s <= 57) {
+                        if (c > '0' && c <= '9') {
                             state = 3;
                             break;
                         }
                         return false;
                     case 2:
-                        if (s == '.') {
+                        if (c == '.') {
                             state = 4;
                             break;
                         }
                         return false;
                     case 3:
-                        if (s >= 48 & s <= 57) {
+                        if (is09(c)) {
                             break;
                         }
-                        if (s == '.') {
+                        if (c == '.') {
                             state = 4;
                             break;
                         }
                         return false;
                     case 4:
-                        if (s >= 48 & s <= 57) {
+                        if (is09(c)) {
                             break;
                         }
                         return false;
@@ -585,85 +633,93 @@ public class AdditionMethods {
             } catch (StringIndexOutOfBoundsException e) {
                 return state > 1;
             }
+
             i++;
         }
     }
 
+    /**
+     * Checks if given word is a value (using Finite-State Machine).
+     *
+     * @param word given word
+     * @return <b>true</b> if it is, <b>false</b> - otherwise
+     */
     public static boolean valueFSM(String word) {
         word = word.toUpperCase();
         int i = 0, state = 0;
+
         while (true) {
             try {
-                char s = word.charAt(i);
+                char c = word.charAt(i);
                 switch (state) {
                     case -1:
                         return false;
                     case 0:
-                        if (s == '\'') {
+                        if (c == '\'') {
                             state = 1;
                             break;
                         }
-                        if (s == '"') {
+                        if (c == '"') {
                             state = 4;
                             break;
                         }
                         return false;
                     case 1:
-                        if ((s >= 65 & s <= 90) | (s >= 1040 & s <= 1071) | (s >= 48 & s <= 57) | s == 1025 | s == '(' | s == ')' | s == '"' | s == 1030) {
+                        if (isAZ(c) || isAZRusUkr(c) || is09(c) || c == '(' || c == ')' || c == '"') {
                             state = 2;
                             break;
                         }
-                        if (s == '\'') {
+                        if (c == '\'') {
                             state = -1;
                             break;
                         }
                         return false;
                     case 2:
-                        if ((s >= 65 & s <= 90) | (s >= 1040 & s <= 1071) | (s >= 48 & s <= 57) | s == 1025 | s == '(' | s == ')' | s == '"' | s == '%' | s == '-' | s == '_' | s == 1030) {
+                        if (isAZ(c) || isAZRusUkr(c) || is09(c) || c == '(' || c == ')' || c == '"' || c == '%' || c == '-' || c == '_') {
                             state = 3;
                             break;
                         }
-                        if (s == '\'') {
+                        if (c == '\'') {
                             state = -1;
                             break;
                         }
                         return false;
                     case 3:
-                        if ((s >= 65 & s <= 90) | (s >= 1040 & s <= 1071) | (s >= 48 & s <= 57) | s == 1025 | s == '(' | s == ')' | s == '"' | s == '%' | s == '-' | s == '_' | s == 1030) {
+                        if (isAZ(c) || isAZRusUkr(c) || is09(c) || c == '(' || c == ')' || c == '"' || c == '%' || c == '-' || c == '_') {
                             state = 3;
                             break;
                         }
-                        if (s == '\'') {
+                        if (c == '\'') {
                             state = -1;
                             break;
                         }
                         return false;
                     case 4:
-                        if ((s >= 65 & s <= 90) | (s >= 1040 & s <= 1071) | (s >= 48 & s <= 57) | s == 1025 | s == '(' | s == ')' | s == '\'' | s == 1030) {
+                        if (isAZ(c) || isAZRusUkr(c) || is09(c) || c == '(' || c == ')' || c == '\'') {
                             state = 5;
                             break;
                         }
-                        if (s == '"') {
+                        if (c == '"') {
                             state = -1;
                             break;
                         }
                         return false;
                     case 5:
-                        if ((s >= 65 & s <= 90) | (s >= 1040 & s <= 1071) | (s >= 48 & s <= 57) | s == 1025 | s == '(' | s == ')' | s == '\'' | s == '%' | s == '-' | s == '_' | s == 1030) {
+                        if (isAZ(c) || isAZRusUkr(c) || is09(c) || c == '(' || c == ')' || c == '\'' || c == '%' || c == '-' || c == '_') {
                             state = 6;
                             break;
                         }
-                        if (s == '"') {
+                        if (c == '"') {
                             state = -1;
                             break;
                         }
                         return false;
                     case 6:
-                        if ((s >= 65 & s <= 90) | (s >= 1040 & s <= 1071) | (s >= 48 & s <= 57) | s == 1025 | s == '(' | s == ')' | s == '\'' | s == '%' | s == '-' | s == '_' | s == 1030) {
+                        if (isAZ(c) || isAZRusUkr(c) || is09(c) || c == '(' || c == ')' || c == '\'' || c == '%' || c == '-' || c == '_') {
                             state = 6;
                             break;
                         }
-                        if (s == '"') {
+                        if (c == '"') {
                             state = -1;
                             break;
                         }
@@ -672,12 +728,14 @@ public class AdditionMethods {
             } catch (StringIndexOutOfBoundsException e) {
                 return state == -1;
             }
+
             i++;
         }
     }
 
     public static void showMessageDialog(Component component, String text, String title, String type) {
         int mesType;
+
         if (type.equalsIgnoreCase("info")) mesType = JOptionPane.INFORMATION_MESSAGE;
         else if (type.equalsIgnoreCase("error")) mesType = JOptionPane.ERROR_MESSAGE;
         else if (type.equalsIgnoreCase("warning")) mesType = JOptionPane.WARNING_MESSAGE;
@@ -687,6 +745,7 @@ public class AdditionMethods {
             JOptionPane.showMessageDialog(component, text);
             return;
         }
+
         JOptionPane.showMessageDialog(component, text, title, mesType);
     }
 
@@ -694,7 +753,7 @@ public class AdditionMethods {
         showMessageDialog(component, text, "Повідомлення", "plain");
     }
 
-    public static void showParcerMessage(String expected, String actual, int position) {
+    public static void showParserMessage(String expected, String actual, int position) {
         JOptionPane.showMessageDialog(null, "Syntax error at pos:" + position
                 + "\n\texpected: " + expected + "\n\tactual: " + actual, "Синтаксичний аналізатор", JOptionPane.ERROR_MESSAGE);
     }
@@ -705,5 +764,17 @@ public class AdditionMethods {
             throw new FileNotFoundException();
         }
         return fch.getSelectedFile();
+    }
+
+    private static boolean isAZ(char c) {
+        return (c >= 'A' && c <= 'Z');
+    }
+
+    private static boolean is09(char c) {
+        return (c >= '0' && c <= '9');
+    }
+
+    private static boolean isAZRusUkr(char c) {
+        return (c >= 'А' && c <= 'Я' || c == 'Ё' || c == 'І');
     }
 }

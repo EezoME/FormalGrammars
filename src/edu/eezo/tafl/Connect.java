@@ -17,29 +17,29 @@ public class Connect {
             Class.forName("org.sqlite.JDBC");
             con = DriverManager.getConnection("jdbc:sqlite:CARS.sqlite");
             Requests.connectedDB = true;
-            System.out.println("Connection succesful.");
+            System.out.println(Data.DB_CONNECTION_SUCCESSFUL);
         } catch (ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "Клас для JDBC відсутній.");
-            System.err.println("Connection failure.");
+            JOptionPane.showMessageDialog(null, Data.DB_MISSING_JDBC_CLASS);
+            System.err.println(Data.DB_CONNECTION_FAILURE);
             System.exit(0);
         } catch (SQLException e) {
-            System.out.println("Connection failure.");
-            int op = JOptionPane.showConfirmDialog(null, "Можливо, не вірно вказана адреса бази даних.\nБажаєте вказати місцезнахождення файлу?\nПримітка: программа не приймає назви з кирилицею.");
+            System.out.println(Data.DB_CONNECTION_FAILURE);
+            int op = JOptionPane.showConfirmDialog(null, Data.DB_WRONG_PATH);
             if (op == 0) {
                 try {
                     String newFileName = AdditionMethods.setNewFile().getAbsolutePath();
                     System.out.println("currentfile: " + newFileName);
                     con = DriverManager.getConnection("jdbc:sqlite:" + newFileName);
                     Requests.connectedDB = true;
-                    System.out.println("Connection succesful.");
+                    System.out.println(Data.DB_CONNECTION_SUCCESSFUL);
                 } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Не вдалося під'єднатися до бази данних.");
+                    JOptionPane.showMessageDialog(null, Data.DB_CONNECTION_ERROR);
                     System.exit(0);
                 } catch (FileNotFoundException ex) {
-                    System.err.println(ex);
+                    System.err.println(ex.getMessage());
                 }
             } else if (op == 1)
-                JOptionPane.showMessageDialog(null, "Без під'єднаної БД программа здатна тільки виводити таблицю токенів.");
+                JOptionPane.showMessageDialog(null, Data.WITHOUT_DB_RESTRICTIONS);
         }
     }
 
@@ -49,14 +49,5 @@ public class Connect {
 
     public void setCon(Connection con) {
         this.con = con;
-    }
-
-    public static void main(String args[]) {
-        //Connect testing = new Connect();
-        /*try {
-         testing.con.close();
-         } catch (SQLException ex) {
-         Logger.getLogger(Connect.class.getName()).log(Level.SEVERE, null, ex);
-         }*/
     }
 }

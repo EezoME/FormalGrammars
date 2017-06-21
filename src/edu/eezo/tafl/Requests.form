@@ -26,7 +26,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="d8f4c" class="javax.swing.JRadioButton" binding="jRB1_queryResult">
+          <component id="d8f4c" class="javax.swing.JRadioButton" binding="radioQueryResult">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -34,7 +34,7 @@
               <text value="Результат запиту"/>
             </properties>
           </component>
-          <component id="72fc" class="javax.swing.JRadioButton" binding="jRB2_tableOfTokens">
+          <component id="72fc" class="javax.swing.JRadioButton" binding="radioTableOfTokens">
             <constraints>
               <grid row="0" column="3" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -42,7 +42,7 @@
               <text value="Таблиця токенів"/>
             </properties>
           </component>
-          <component id="cda52" class="javax.swing.JCheckBox" binding="jChB3_IncludeSemantic">
+          <component id="cda52" class="javax.swing.JCheckBox" binding="checkboxIncludeSemantic">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -50,7 +50,7 @@
               <text value="Включити семантичний аналіз"/>
             </properties>
           </component>
-          <component id="deeb2" class="javax.swing.JCheckBox" binding="jChB2_IncludeParser">
+          <component id="deeb2" class="javax.swing.JCheckBox" binding="checkboxIncludeParser">
             <constraints>
               <grid row="1" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -58,7 +58,7 @@
               <text value="Bключити синтаксичний аналіз"/>
             </properties>
           </component>
-          <component id="90dd1" class="javax.swing.JCheckBox" binding="jChB1_Regexp">
+          <component id="90dd1" class="javax.swing.JCheckBox" binding="checkboxRegexp">
             <constraints>
               <grid row="1" column="4" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -66,7 +66,7 @@
               <text value="Використати регулярні вирази"/>
             </properties>
           </component>
-          <component id="61fec" class="javax.swing.JLabel" binding="jLabel2">
+          <component id="61fec" class="javax.swing.JLabel">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -74,7 +74,7 @@
               <text value="Введіть запит:"/>
             </properties>
           </component>
-          <component id="25ee5" class="javax.swing.JComboBox" binding="jComboBox1">
+          <component id="25ee5" class="javax.swing.JComboBox" binding="comboboxQery">
             <constraints>
               <grid row="2" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="2" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -86,7 +86,7 @@
               </model>
             </properties>
           </component>
-          <component id="8093c" class="javax.swing.JButton" binding="jB1_Send">
+          <component id="8093c" class="javax.swing.JButton" binding="buttonSend">
             <constraints>
               <grid row="2" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -101,7 +101,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="2c77a" class="javax.swing.JTable" binding="jTable1">
+              <component id="2c77a" class="javax.swing.JTable" binding="tableResults">
                 <constraints/>
                 <properties/>
               </component>
