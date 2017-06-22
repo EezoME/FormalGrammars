@@ -15,7 +15,7 @@ public class Connect {
     public Connect() {
         try {
             Class.forName("org.sqlite.JDBC");
-            con = DriverManager.getConnection("jdbc:sqlite:CARS.sqlite");
+            con = DriverManager.getConnection("jdbc:sqlite:TEST.sqlite");
             Requests.connectedDB = true;
             System.out.println(Data.DB_CONNECTION_SUCCESSFUL);
         } catch (ClassNotFoundException e) {
@@ -27,7 +27,7 @@ public class Connect {
             int op = JOptionPane.showConfirmDialog(null, Data.DB_WRONG_PATH);
             if (op == 0) {
                 try {
-                    String newFileName = AdditionMethods.setNewFile().getAbsolutePath();
+                    String newFileName = AdditionMethods.getNewFile().getAbsolutePath();
                     System.out.println("currentfile: " + newFileName);
                     con = DriverManager.getConnection("jdbc:sqlite:" + newFileName);
                     Requests.connectedDB = true;

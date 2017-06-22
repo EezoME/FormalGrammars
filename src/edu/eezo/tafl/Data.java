@@ -32,7 +32,7 @@ public final class Data {
 
     // Lexical Analizator Messages
     static String LEXICAL_ANALIZATOR = "Лексичний аналізатор";
-    static String LEXICAL_UNKOWN_LEXEMS = "Увага! Запит містить невизначені лексеми.";
+    static String LEXICAL_UNKNOWN_LEXEMS = "Увага! Запит містить невизначені лексеми.";
 
     static String WARNING = "warning";
     static String ERROR = "error";

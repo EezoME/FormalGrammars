@@ -758,7 +758,7 @@ public class AdditionMethods {
                 + "\n\texpected: " + expected + "\n\tactual: " + actual, "Синтаксичний аналізатор", JOptionPane.ERROR_MESSAGE);
     }
 
-    public static File setNewFile() throws FileNotFoundException {
+    public static File getNewFile() throws FileNotFoundException {
         fch.setCurrentDirectory(new File("f:/"));
         if (fch.showDialog(null, "Вибрати файл") == JFileChooser.CANCEL_OPTION) {
             throw new FileNotFoundException();

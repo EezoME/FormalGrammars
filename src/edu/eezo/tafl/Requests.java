@@ -4,11 +4,14 @@ import javax.swing.*;
 
 import java.awt.event.*;
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
@@ -25,10 +28,12 @@ public class Requests extends JFrame {
     private JCheckBox checkboxIncludeSemantic;
     private JCheckBox checkboxIncludeParser;
     private JCheckBox checkboxRegexp;
-    private JComboBox comboboxQery;
+    private JComboBox comboboxQuery;
     private JButton buttonSend;
     private JTable tableResults;
     private JPanel rootPanel;
+    private JLabel labelDBPath;
+    private JButton buttonLoad;
 
     // ! программа настроенна на базу данных по адресу F:\\CARS.sqlite, но сама БД прилагается в папке программы
 
@@ -64,6 +69,11 @@ public class Requests extends JFrame {
             bg1.setSelected(radioTableOfTokens.getModel(), true);
         }
 
+        try {
+            labelDBPath.setText("DB: " + con.getMetaData().getURL());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         tableResults.setVisible(false);
         checkboxIncludeParser.setSelected(true);
         checkboxIncludeSemantic.setSelected(true);
@@ -75,7 +85,7 @@ public class Requests extends JFrame {
             }
         });
 
-        comboboxQery.addKeyListener(new KeyAdapter() {
+        comboboxQuery.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -87,26 +97,26 @@ public class Requests extends JFrame {
             }
         });
 
-        comboboxQery.addMouseWheelListener(new MouseWheelListener() {
+        comboboxQuery.addMouseWheelListener(new MouseWheelListener() {
             @Override
             public void mouseWheelMoved(MouseWheelEvent e) {
                 try {
                     if (e.getWheelRotation() < 0) {
-                        if (comboboxQery.getSelectedIndex() == 0) {
-                            comboboxQery.setSelectedIndex(comboboxQery.getItemCount() - 1);
+                        if (comboboxQuery.getSelectedIndex() == 0) {
+                            comboboxQuery.setSelectedIndex(comboboxQuery.getItemCount() - 1);
                         } else {
-                            comboboxQery.setSelectedIndex(comboboxQery.getSelectedIndex() - 1);
+                            comboboxQuery.setSelectedIndex(comboboxQuery.getSelectedIndex() - 1);
                         }
                     } else {
-                        if (comboboxQery.getSelectedIndex() == (comboboxQery.getItemCount() - 1)) {
-                            comboboxQery.setSelectedIndex(0);
+                        if (comboboxQuery.getSelectedIndex() == (comboboxQuery.getItemCount() - 1)) {
+                            comboboxQuery.setSelectedIndex(0);
                         } else {
-                            comboboxQery.setSelectedIndex(comboboxQery.getSelectedIndex() + 1);
+                            comboboxQuery.setSelectedIndex(comboboxQuery.getSelectedIndex() + 1);
                         }
                     }
-                    selectedCB = comboboxQery.getSelectedIndex();
+                    selectedCB = comboboxQuery.getSelectedIndex();
                 } catch (IllegalArgumentException e1) {
-                    comboboxQery.setSelectedIndex(selectedCB);
+                    comboboxQuery.setSelectedIndex(selectedCB);
                 }
             }
         });
@@ -133,6 +143,13 @@ public class Requests extends JFrame {
                 }
             }
         });
+
+        buttonLoad.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadFromFile();
+            }
+        });
     }
 
     private void run() {
@@ -149,7 +166,7 @@ public class Requests extends JFrame {
         }
 
         if (checkboxIncludeSemantic.isSelected()) {
-            semantic(comboboxQery.getSelectedItem().toString());
+            semantic(comboboxQuery.getSelectedItem().toString());
         }
 
         if (bg1.getSelection() == radioQueryResult.getModel()) {
@@ -161,11 +178,26 @@ public class Requests extends JFrame {
         } else {
             tokenTable();
         }
+    }
 
-        if ((200 + model.getRowCount() * 16) < 860) {
-            setBounds(getX(), getY(), 600 + model.getColumnCount() * 20, 200 + model.getRowCount() * 16);
-        } else {
-            setBounds(getX(), 0, 600 + model.getColumnCount() * 20, 860);
+    private void loadFromFile() {
+        try {
+            File queriesFile = getNewFile();
+            if (!queriesFile.exists() || !queriesFile.isFile() || !queriesFile.canRead()) {
+                showMessageDialog(null, "There is a problem with a file.", "FileChooser", Data.ERROR);
+                return;
+            }
+
+            List<String> queries = Files.readAllLines(queriesFile.toPath(), Charset.defaultCharset());
+            comboboxQuery.removeAllItems();
+
+            for (String query : queries){
+                comboboxQuery.addItem(query);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -179,9 +211,9 @@ public class Requests extends JFrame {
             } else if (word.matches("SELECT|FROM|WHERE|JOIN|INNER|LEFT|RIGHT|FULL|ON|IN|AS|CREATE|DROP|TABLE|INSERT|INTO|DELETE|ORDER|BY|HAVING|GROUP|INDEX|IF|EXISTS|ALTER")) {
                 return "keyword";
             } else if (word.matches("[A-Z]{1}[A-Z0-9]{0,7}")) {
-                return "tablename(id2)";
+                return "tablename";
             } else if (word.matches("\\*|([A-Z]{1}[A-Z0-9]{0,7}\\.)?[A-Z\\_]{1}[A-Z0-9\\_-]{0,15}")) {
-                return "field(id3)";
+                return "field";
             } else if (word.matches("\\>|\\<")) {
                 return "relation";
             } else if (word.matches("\\-?0?\\d+(\\.\\d{0,})?")) {
@@ -195,9 +227,9 @@ public class Requests extends JFrame {
             } else if (keywordFSM(word)) {
                 return "keyword";
             } else if (tablenameFSM(word)) {
-                return "tablename(id2)";
+                return "tablename";
             } else if (fieldFSM(word)) {
-                return "field(id3)";
+                return "field";
             } else if (relationFSM(word)) {
                 return "relation";
             } else if (numberFSM(word)) {
@@ -224,7 +256,7 @@ public class Requests extends JFrame {
 
             if (op == 0) {
                 try {
-                    syntax = setNewFile();
+                    syntax = getNewFile();
                 } catch (FileNotFoundException ex1) {
                     showMessageDialog(rootPane, Data.SYNTAX_NO_SYNTAX, Data.SYNTAX_ANALIZATOR, Data.ERROR);
                     return false;
@@ -254,7 +286,7 @@ public class Requests extends JFrame {
 
         int pos = 0, tokenCounter = 0;
         String prev = "";
-        token = new StringTokenizer(comboboxQery.getSelectedItem().toString(), " \t\n\r,=*/><();+", true);
+        token = new StringTokenizer(comboboxQuery.getSelectedItem().toString(), " \t\n\r,=*/><();+", true);
 
         while (token.hasMoreTokens()) {
             String aToken = token.nextToken();
@@ -265,7 +297,7 @@ public class Requests extends JFrame {
             if (tokenList.get(tokenCounter).equals("fields")) {
                 while (!aToken.equalsIgnoreCase("FROM")) {
                     if (" ".equals(aToken)) {
-                        if (!" ".equals(prev) & !",".equals(prev) & !"field(id3)".equals(whichToken(prev)) & !"*".equals(prev)) {
+                        if (!" ".equals(prev) & !",".equals(prev) & !"field".equals(whichToken(prev)) & !"*".equals(prev)) {
                             showParserMessage("','", "' '", pos);
                             return false;
                         }
@@ -338,7 +370,7 @@ public class Requests extends JFrame {
         try {
             model.setColumnCount(0);
             st = con.createStatement();
-            rs = st.executeQuery(comboboxQery.getSelectedItem().toString());
+            rs = st.executeQuery(comboboxQuery.getSelectedItem().toString());
 
             int colCount = rs.getMetaData().getColumnCount();
             Object[] colIdent = new Object[colCount];
@@ -379,11 +411,12 @@ public class Requests extends JFrame {
         }
     }
 
+    // filling the table
     private void tokenTable() {
-        model.setColumnCount(5);
-        Object[] colIdent = {"Токен", "Лексема", "Початок", "Довжина", "Адреса"};
+        model.setColumnCount(4);
+        Object[] colIdent = {"Токен", "Лексема", "Початок", "Довжина"};
         model.setColumnIdentifiers(colIdent);
-        String line = comboboxQery.getSelectedItem().toString();
+        String line = comboboxQuery.getSelectedItem().toString();
         StringTokenizer tokens = new StringTokenizer(line, " \t\n\r,=*/><();+", true);
         String aToken;
         int row = 0, pos = 1;
@@ -397,13 +430,13 @@ public class Requests extends JFrame {
             model.setRowCount(model.getRowCount() + 1);
             if (row > 0) {
                 if (aToken.equals("*") && "keyword".equalsIgnoreCase(tableResults.getValueAt(row - 1, 0).toString())) {
-                    tableResults.setValueAt("field(id3)", row, 0);
+                    tableResults.setValueAt("field", row, 0);
                     tableResults.setValueAt(aToken, row, 1);
                     tableResults.setValueAt(pos, row, 2);
                     tableResults.setValueAt(aToken.length(), row, 3);
                 } else {
-                    if ("tablename(id2)".equals(whichToken(aToken)) && !tableResults.getValueAt(row - 1, 1).toString().toUpperCase().matches("FROM|JOIN|TABLE")) {
-                        tableResults.setValueAt("field(id3)", row, 0);
+                    if ("tablename".equals(whichToken(aToken)) && !tableResults.getValueAt(row - 1, 1).toString().toUpperCase().matches("FROM|JOIN|TABLE")) {
+                        tableResults.setValueAt("field", row, 0);
                     } else {
                         tableResults.setValueAt(whichToken(aToken), row, 0);
                     }
@@ -431,19 +464,13 @@ public class Requests extends JFrame {
                 tableResults.setValueAt(aToken.length(), row, 3);
             }
 
-            if (tableResults.getValueAt(row, 0).toString().matches("field\\(id3\\)|tablename\\(id2\\)")) {
-                tableResults.setValueAt(Math.round(Math.random() * 10000), row, 4);
-            } else {
-                tableResults.setValueAt("", row, 4);
-            }
-
             row += 1;
             pos += aToken.length();
         }
 
         for (int i = 0; i < tableResults.getRowCount(); i++) {
             if (tableResults.getValueAt(i, 0) == "!invalid lexem") {
-                JOptionPane.showMessageDialog(rootPane, Data.LEXICAL_UNKOWN_LEXEMS, Data.LEXICAL_ANALIZATOR, JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(rootPane, Data.LEXICAL_UNKNOWN_LEXEMS, Data.LEXICAL_ANALIZATOR, JOptionPane.WARNING_MESSAGE);
                 break;
             }
         }
