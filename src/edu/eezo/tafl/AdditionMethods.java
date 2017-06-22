@@ -61,35 +61,74 @@ public class AdditionMethods {
                     case -1:
                         return false;
                     case 0:
+                        // SELECT
                         if (c == 'S') {
                             state = 1;
                             break;
                         }
+
+                        // FROM
                         if (c == 'F') {
                             state = 11;
                             break;
                         }
+
+                        // WHERE
                         if (c == 'W') {
                             state = 21;
                             break;
                         }
+
+                        // JOIN
                         if (c == 'J') {
                             state = 31;
                             break;
                         }
+
+                        // INNER | INSERT | INTO | INT
                         if (c == 'I') {
                             state = 41;
                             break;
                         }
+
+                        // ON
                         if (c == 'O') {
                             state = 51;
                             break;
                         }
+
+                        // AS
                         if (c == 'A') {
                             state = 61;
                             break;
                         }
+
+                        // CREATE
+                        if (c == 'C') {
+                            state = 71;
+                            break;
+                        }
+
+                        // TABLE
+                        if (c == 'T') {
+                            state = 81;
+                            break;
+                        }
+
+                        // VALUES
+                        if (c == 'V') {
+                            state = 91;
+                            break;
+                        }
+
+                        // DELETE
+                        if (c == 'D') {
+                            state = 101;
+                            break;
+                        }
                         return false;
+
+                    // SELECT
                     case 1:
                         if (c == 'E') {
                             state = 2;
@@ -120,6 +159,8 @@ public class AdditionMethods {
                             break;
                         }
                         return false;
+
+                    // FROM
                     case 11:
                         if (c == 'R') {
                             state = 12;
@@ -138,6 +179,8 @@ public class AdditionMethods {
                             break;
                         }
                         return false;
+
+                    // WHERE
                     case 21:
                         if (c == 'H') {
                             state = 22;
@@ -162,6 +205,8 @@ public class AdditionMethods {
                             break;
                         }
                         return false;
+
+                    // JOIN
                     case 31:
                         if (c == 'O') {
                             state = 32;
@@ -180,6 +225,8 @@ public class AdditionMethods {
                             break;
                         }
                         return false;
+
+                    // INNER
                     case 41:
                         if (c == 'N') {
                             state = 42;
@@ -189,6 +236,14 @@ public class AdditionMethods {
                     case 42:
                         if (c == 'N') {
                             state = 43;
+                            break;
+                        }
+                        if (c == 'S') {
+                            state = 421;
+                            break;
+                        }
+                        if (c == 'T') {
+                            state = 431;
                             break;
                         }
                         return false;
@@ -204,30 +259,200 @@ public class AdditionMethods {
                             break;
                         }
                         return false;
+
+                    // ON
                     case 51:
                         if (c == 'N') {
                             state = -1;
                             break;
                         }
                         return false;
+
+                    // AS
                     case 61:
                         if (c == 'S') {
                             state = -1;
                             break;
                         }
                         return false;
+
+                    // CREATE
+                    case 71:
+                        if (c == 'R') {
+                            state = 72;
+                            break;
+                        }
+                        return false;
+                    case 72:
+                        if (c == 'E') {
+                            state = 73;
+                            break;
+                        }
+                        return false;
+                    case 73:
+                        if (c == 'A') {
+                            state = 74;
+                            break;
+                        }
+                        return false;
+                    case 74:
+                        if (c == 'T') {
+                            state = 75;
+                            break;
+                        }
+                        return false;
+                    case 75:
+                        if (c == 'E') {
+                            state = -1;
+                            break;
+                        }
+                        return false;
+
+                    // TABLE
+                    case 81:
+                        if (c == 'A') {
+                            state = 82;
+                            break;
+                        }
+                        return false;
+                    case 82:
+                        if (c == 'B') {
+                            state = 83;
+                            break;
+                        }
+                        return false;
+                    case 83:
+                        if (c == 'L') {
+                            state = 84;
+                            break;
+                        }
+                        return false;
+                    case 84:
+                        if (c == 'E') {
+                            state = -1;
+                            break;
+                        }
+                        return false;
+
+                    // VALUES
+                    case 91:
+                        if (c == 'A') {
+                            state = 92;
+                            break;
+                        }
+                        return false;
+                    case 92:
+                        if (c == 'L') {
+                            state = 93;
+                            break;
+                        }
+                        return false;
+                    case 93:
+                        if (c == 'U') {
+                            state = 94;
+                            break;
+                        }
+                        return false;
+                    case 94:
+                        if (c == 'E') {
+                            state = 95;
+                            break;
+                        }
+                        return false;
+                    case 95:
+                        if (c == 'S') {
+                            state = -1;
+                            break;
+                        }
+                        return false;
+
+                    // DELETE
+                    case 101:
+                        if (c == 'E') {
+                            state = 102;
+                            break;
+                        }
+                        return false;
+                    case 102:
+                        if (c == 'L') {
+                            state = 103;
+                            break;
+                        }
+                        return false;
+                    case 103:
+                        if (c == 'E') {
+                            state = 104;
+                            break;
+                        }
+                        return false;
+                    case 104:
+                        if (c == 'T') {
+                            state = 105;
+                            break;
+                        }
+                        return false;
+                    case 105:
+                        if (c == 'E') {
+                            state = -1;
+                            break;
+                        }
+                        return false;
+
+                    // INSERT
+                    case 421:
+                        if (c == 'E') {
+                            state = 422;
+                            break;
+                        }
+                        return false;
+                    case 422:
+                        if (c == 'R') {
+                            state = 423;
+                            break;
+                        }
+                        return false;
+                    case 423:
+                        if (c == 'T') {
+                            state = -1;
+                            break;
+                        }
+                        return false;
+
+                    // INTO
+                    case 431:
+                        if (c == 'O') {
+                            state = -1;
+                            break;
+                        }
+                        return false;
                 }
             } catch (StringIndexOutOfBoundsException e) {
-                return state == -1;
+                return (state == -1 || state == 431);
             }
 
             i++;
         }
     }
 
+//    private void selectKeywordFSM(String word) {
+//        int i = 0, state = 0;
+//
+//        while (true) {
+//            try {
+//                char c = word.charAt(i);
+//                switch (state) {
+//                    case -1:
+//                        return false;
+//                    case 0:
+//                        if (c == 'S') {
+//                            state = 1;
+//                            break;
+//                        }
+//    }
+
     /**
      * Checks if given word is a table name (using Finite-State Machine).
-     *
+     * <b>table</b> max 7 characters length, only letters and digits with first letter
      * @param word given word
      * @return <b>true</b> if it is, <b>false</b> - otherwise
      */
@@ -301,7 +526,9 @@ public class AdditionMethods {
 
     /**
      * Checks if given word is a field name (using Finite-State Machine).
-     *
+     * Condition: [<table>.]<field> <br/>
+     * <b>table</b> max 7 characters length, only letters and digits with first letter<br/>
+     * <b>field</b> max 15 characters length, only letters, digits _ or - with first letter or _
      * @param word given word
      * @return <b>true</b> if it is, <b>false</b> - otherwise
      */
