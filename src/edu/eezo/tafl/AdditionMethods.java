@@ -977,12 +977,12 @@ public class AdditionMethods {
     }
 
     public static void showMessageDialog(Component component, String text) {
-        showMessageDialog(component, text, "Повідомлення", "plain");
+        showMessageDialog(component, text, "Повідомлення", Data.PLAIN);
     }
 
     public static void showParserMessage(String expected, String actual, int position) {
         JOptionPane.showMessageDialog(null, "Syntax error at pos:" + position
-                + "\n\texpected: " + expected + "\n\tactual: " + actual, "Синтаксичний аналізатор", JOptionPane.ERROR_MESSAGE);
+                + "\n\texpected: " + expected + "\n\tactual: " + actual, Data.SYNTAX_ANALIZATOR, JOptionPane.ERROR_MESSAGE);
     }
 
     public static File getNewFile() throws FileNotFoundException {

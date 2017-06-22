@@ -36,4 +36,5 @@ public final class Data {
 
     static String WARNING = "warning";
     static String ERROR = "error";
+    static String PLAIN = "plain";
 }

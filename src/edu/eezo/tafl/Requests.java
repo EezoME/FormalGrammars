@@ -435,7 +435,7 @@ public class Requests extends JFrame {
                     tableResults.setValueAt(pos, row, 2);
                     tableResults.setValueAt(aToken.length(), row, 3);
                 } else {
-                    if ("tablename".equals(whichToken(aToken)) && !tableResults.getValueAt(row - 1, 1).toString().toUpperCase().matches("FROM|JOIN|TABLE")) {
+                    if ("tablename".equals(whichToken(aToken)) && !tableResults.getValueAt(row - 1, 1).toString().toUpperCase().matches("FROM|JOIN|TABLE|INTO")) {
                         tableResults.setValueAt("field", row, 0);
                     } else {
                         tableResults.setValueAt(whichToken(aToken), row, 0);
