@@ -46,7 +46,7 @@ public class AdditionMethods {
 
     /**
      * Checks if given word is a keyword (using Finite-State Machine).
-     *
+     * Supported keywords: SELECT, INSERT, INTO, DELETE, FROM, INT, TABLE, VALUES, WHERE, INNER, JOIN, DROP, ON, AS, CREATE
      * @param word given word
      * @return <b>true</b> if it is, <b>false</b> - otherwise
      */

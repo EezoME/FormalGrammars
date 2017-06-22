@@ -1,5 +1,7 @@
 package edu.eezo.tafl;
 
+import sun.misc.Regexp;
+
 import javax.swing.*;
 
 import java.awt.event.*;
@@ -11,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 import javax.swing.ButtonGroup;
@@ -34,6 +37,7 @@ public class Requests extends JFrame {
     private JPanel rootPanel;
     private JLabel labelDBPath;
     private JButton buttonLoad;
+    private JButton buttonParseLiterature;
 
     // ! программа настроенна на базу данных по адресу F:\\CARS.sqlite, но сама БД прилагается в папке программы
 
@@ -75,7 +79,8 @@ public class Requests extends JFrame {
             e.printStackTrace();
         }
         tableResults.setVisible(false);
-        checkboxIncludeParser.setSelected(true);
+//        checkboxIncludeParser.setSelected(true);
+        checkboxIncludeParser.setVisible(false);
         checkboxIncludeSemantic.setSelected(true);
 
         buttonSend.addActionListener(new ActionListener() {
@@ -148,6 +153,13 @@ public class Requests extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 loadFromFile();
+            }
+        });
+
+        buttonParseLiterature.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                parseLiterature();
             }
         });
     }
@@ -474,6 +486,31 @@ public class Requests extends JFrame {
                 break;
             }
         }
+    }
+
+    private void parseLiterature(){
+        try {
+            File queriesFile = getNewFile();
+            if (!queriesFile.exists() || !queriesFile.isFile() || !queriesFile.canRead()) {
+                showMessageDialog(null, "There is a problem with a file.", "FileChooser", Data.ERROR);
+                return;
+            }
+
+            List<String> literatureList = Files.readAllLines(queriesFile.toPath(), Charset.defaultCharset());
+            for (String literature : literatureList) {
+                parseAndInsert(literature);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void parseAndInsert(String line) {
+//        String annotationRegexp = new Regexp("/(^\d+\.)(.+\/)(.+?\.\s?-)(.+?:)(.+,)(.+?\.\s?-)(.+)/");
+        Regexp annotationRegexp = new Regexp("(^d+.)(.+/)(.+?.s?-)(.+?:)(.+,)(.+?.s?-)(.+)");
+        System.out.println(Arrays.toString(line.split("(^d+.)|(.+/)|(.+?.s?-)|(.+?:)|(.+,)|(.+?.s?-)|(.+)")));
     }
 
     private void getHelp() {
