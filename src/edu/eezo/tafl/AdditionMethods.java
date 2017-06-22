@@ -121,7 +121,7 @@ public class AdditionMethods {
                             break;
                         }
 
-                        // DELETE
+                        // DELETE | DROP
                         if (c == 'D') {
                             state = 101;
                             break;
@@ -372,6 +372,10 @@ public class AdditionMethods {
                             state = 102;
                             break;
                         }
+                        if (c == 'R') {
+                            state = 111;
+                            break;
+                        }
                         return false;
                     case 102:
                         if (c == 'L') {
@@ -393,6 +397,20 @@ public class AdditionMethods {
                         return false;
                     case 105:
                         if (c == 'E') {
+                            state = -1;
+                            break;
+                        }
+                        return false;
+
+                    // DROP
+                    case 111:
+                        if (c == 'O') {
+                            state = 112;
+                            break;
+                        }
+                        return false;
+                    case 112:
+                        if (c == 'P') {
                             state = -1;
                             break;
                         }
@@ -433,22 +451,6 @@ public class AdditionMethods {
             i++;
         }
     }
-
-//    private void selectKeywordFSM(String word) {
-//        int i = 0, state = 0;
-//
-//        while (true) {
-//            try {
-//                char c = word.charAt(i);
-//                switch (state) {
-//                    case -1:
-//                        return false;
-//                    case 0:
-//                        if (c == 'S') {
-//                            state = 1;
-//                            break;
-//                        }
-//    }
 
     /**
      * Checks if given word is a table name (using Finite-State Machine).
